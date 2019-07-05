@@ -4,9 +4,16 @@ import request from '@/utils/request'
 // 获取所有的菜单树
 export function getPermissionTree() {
     return request({
-        url: '/api-user/permission',
+        url: '/api-user/permission/tree',
         method: 'get'
     })
+}
+
+export function list() {
+  return request({
+    url: '/api-user/permission',
+    method: 'get'
+  })
 }
 
 export function add(data) {

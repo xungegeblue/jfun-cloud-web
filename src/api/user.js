@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { getToken } from '../utils/auth'
 
 export function login(data) {
   let param = new URLSearchParams()
@@ -23,9 +24,10 @@ export function getInfo(token) {
 }
 
 export function logout() {
+  var token = getToken();
   return request({
-    url: '/api-auth/logout',
-    method: 'post'
+    url: '/api-auth/logout?token='+token,
+    method: 'get'
   })
 }
 

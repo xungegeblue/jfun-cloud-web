@@ -67,6 +67,7 @@
         },
         created() {
             this.getRoles();
+
             //设置列表权限
             this.$nextTick(() => {
                 this.init();
@@ -111,7 +112,6 @@
             getRoles() {
                 getRoleList().then(res => {
                     this.roles = res;
-
                 })
             }
         }

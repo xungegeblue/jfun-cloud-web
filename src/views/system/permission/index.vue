@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <eHeader :permissions="permissions" :query="query" :sup_this="sup_this"/>
     <el-table
       :data="data"
       style="width: 100%;margin-bottom: 20px;"
@@ -40,11 +41,11 @@
   import eHeader from './module/header'
   import checkPermission from '@/utils/permission'
   import { parseTime } from '@/utils/index'
-  import { getPermissionTree, del } from '@/api/permission'
+  import { getPermissionTree, del, list } from '@/api/permission'
   import edit from './module/edit'
 
   export default {
-    components: {  eHeader, edit },
+    components: { eHeader, edit },
     mixins: [initData],
     data() {
       return {
@@ -52,7 +53,7 @@
       }
     },
     created() {
-      this.getData()
+      this.getPermissions()
       this.$nextTick(() => {
         this.init()
       })
@@ -61,17 +62,16 @@
       checkPermission,
       parseTime,
       beforeInit() {
-        return false
+        this.url = "/api-user/permission"
+        return true
       },
-      getData() {
+
+      getPermissions() {
         getPermissionTree().then(res => {
-          this.data = res.records
-          console.log(this.data)
           this.permissions = []
           const permission = { id: 0, label: '顶级类目', children: [] }//这个手动添加的顶级的默认0
           permission.children = res
           this.permissions.push(permission)
-          this.loading = false
         })
       },
       subDelete(id) {
